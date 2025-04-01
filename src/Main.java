@@ -4,43 +4,37 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-// 1. Load data
-        LanguageDataLoader.load("resources/lang_data.csv");
+        LanguageDataLoader.load("resources/train_data.csv");
 
-// 2. Vectorize all texts
-        List<double[]> inputVectors = new ArrayList<>();
+        List<double[]> trainVectors = new ArrayList<>();
         for (String text : LanguageDataLoader.texts) {
-            inputVectors.add(TextVectorizer.vectorize(text));
+            trainVectors.add(TextVectorizer.vectorize(text));
         }
-        double[][] allInputs = inputVectors.toArray(new double[0][]);
-        int[] allLabels = LanguageDataLoader.labels.stream().mapToInt(i -> i).toArray();
 
-// 3. Split data 70-30
-        List<double[]> trainInputsList = new ArrayList<>();
-        List<Integer> trainLabelsList = new ArrayList<>();
-        List<double[]> testInputsList = new ArrayList<>();
-        List<Integer> testLabelsList = new ArrayList<>();
+        double[][] trainInputs = trainVectors.toArray(new double[0][]);
+        int[] trainLabels = LanguageDataLoader.labels.stream().mapToInt(i -> i).toArray();
 
-        LanguageDataLoader.splitDataset(allInputs, allLabels, 0.4, trainInputsList, trainLabelsList, testInputsList, testLabelsList);
-
-// Convert to arrays
-        double[][] trainInputs = trainInputsList.toArray(new double[0][]);
-        int[] trainLabels = trainLabelsList.stream().mapToInt(i -> i).toArray();
-        double[][] testInputs = testInputsList.toArray(new double[0][]);
-        int[] testLabels = testLabelsList.stream().mapToInt(i -> i).toArray();
-
-// 4. Train
         SingleLayerNeuralNetwork net = new SingleLayerNeuralNetwork(26, 3, 0.1, 0.1);
         net.trainLayer(trainInputs, trainLabels, 50);
 
-// 5. Predict and Evaluate
+        LanguageDataLoader.texts.clear();
+        LanguageDataLoader.labels.clear();
+        LanguageDataLoader.load("resources/test_data.csv");
+
+        List<double[]> testVectors = new ArrayList<>();
+        for (String text : LanguageDataLoader.texts) {
+            testVectors.add(TextVectorizer.vectorize(text));
+        }
+
+        double[][] testInputs = testVectors.toArray(new double[0][]);
+        int[] testLabels = LanguageDataLoader.labels.stream().mapToInt(i -> i).toArray();
+
         int[] predictedLabels = new int[testInputs.length];
         for (int i = 0; i < testInputs.length; i++) {
             predictedLabels[i] = net.predict(testInputs[i]);
         }
 
         evaluateModel(testLabels, predictedLabels, 3);
-
     }
 
     public static void evaluateModel(int[] trueLabels, int[] predictedLabels, int numClasses) {

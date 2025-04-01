@@ -53,21 +53,19 @@ public class Perceptron {
                     threshold -= alpha * error;
                 }
             }
-
-            double accuracy = EvaluationMetrics.measureAccuracy(toList(desiredOutputVec), toList(predictions));
+//            double accuracy = EvaluationMetrics.measureAccuracy(toList(desiredOutputVec), toList(predictions));
 //            System.out.println("Epoch " + (epoch + 1) + ": Errors = " + errors + ", Accuracy = " + (int) (accuracy * 100) + "%");
-
             if (errors == 0) break;
         }
     }
 
-    private List<Integer> toList(int[] arr) {
-        List<Integer> list = new ArrayList<>();
-        for (int val : arr) {
-            list.add(val);
-        }
-        return list;
-    }
+//    private List<Integer> toList(int[] arr) {
+//        List<Integer> list = new ArrayList<>();
+//        for (int val : arr) {
+//            list.add(val);
+//        }
+//        return list;
+//    }
 
     public double[] getWeights() {
         return this.weights;

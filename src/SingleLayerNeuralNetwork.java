@@ -25,7 +25,6 @@ public class SingleLayerNeuralNetwork {
                 //Each perceptron act as a binary classifier responsible for recognizing its own class.
                 binaryLabels[j] = (labels[j] == i) ? 1 : 0;
             }
-            System.out.println("Training perceptron for class " + i + "...");
             neurons.get(i).train(inputs, binaryLabels, epochs);
         }
     }
@@ -62,9 +61,5 @@ public class SingleLayerNeuralNetwork {
             }
             return selectedClass;
         }
-    }
-
-    public List<Perceptron> getNeurons() {
-        return neurons;
     }
 }
