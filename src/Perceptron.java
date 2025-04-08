@@ -66,12 +66,4 @@ public class Perceptron {
 //        }
 //        return list;
 //    }
-
-    public double[] getWeights() {
-        return this.weights;
-    }
-
-    public double getThreshold() {
-        return this.threshold;
-    }
 }

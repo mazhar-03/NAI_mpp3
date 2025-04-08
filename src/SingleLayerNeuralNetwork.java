@@ -25,6 +25,7 @@ public class SingleLayerNeuralNetwork {
                 //Each perceptron act as a binary classifier responsible for recognizing its own class.
                 binaryLabels[j] = (labels[j] == i) ? 1 : 0;
             }
+            //training each perceptron immediatliy
             neurons.get(i).train(inputs, binaryLabels, epochs);
         }
     }
@@ -34,7 +35,7 @@ public class SingleLayerNeuralNetwork {
         List<Double> netValues = new ArrayList<>();
 
         for (int i = 0; i < neurons.size(); i++) {
-            //Each Perceptron's input
+            //each Perceptron's input
             int activated = neurons.get(i).predict(input);
             if (activated == 1) {
                 activatedClasses.add(i);
