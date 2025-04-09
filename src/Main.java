@@ -41,12 +41,11 @@ public class Main {
         languageMap.put(1, "Turkish");
         languageMap.put(2, "Polish");
 
-        System.out.println("\nEnter a sentence to predict its language:");
+        System.out.println("\nEnter the test sentence: ");
         String inputText = scanner.nextLine();
         double[] inputVector = TextVectorizer.vectorize(inputText);
 
-        int predicted = net.predict(inputVector);
-        String result = languageMap.getOrDefault(predicted, "Unknown");
+        String result = languageMap.getOrDefault(net.predict(inputVector), "Unknown");
 
         System.out.println("Predicted language: " + result);
     }
