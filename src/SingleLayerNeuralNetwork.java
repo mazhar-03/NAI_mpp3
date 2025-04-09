@@ -43,13 +43,8 @@ public class SingleLayerNeuralNetwork {
                 netValues.add(neurons.get(i).computeNet(input));
             }
         }
-
-        if (activatedClasses.isEmpty()) {
-            return -1;
-        }
-        else if (activatedClasses.size() == 1) {
-            return activatedClasses.getFirst();
-        }
+        if (activatedClasses.isEmpty()) return -1;
+        else if (activatedClasses.size() == 1) return activatedClasses.getFirst();
         else {
             //for starting the lowest possible. We will compare the net values
             double maxNet = Double.NEGATIVE_INFINITY;
