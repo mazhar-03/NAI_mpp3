@@ -1,6 +1,5 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -35,6 +34,21 @@ public class Main {
         }
 
         evaluateModel(testLabels, predictedLabels, 3);
+
+        Scanner scanner = new Scanner(System.in);
+        Map<Integer, String> languageMap = new HashMap<>();
+        languageMap.put(0, "English");
+        languageMap.put(1, "Turkish");
+        languageMap.put(2, "Polish");
+
+        System.out.println("\nEnter a sentence to predict its language:");
+        String inputText = scanner.nextLine();
+        double[] inputVector = TextVectorizer.vectorize(inputText);
+
+        int predicted = net.predict(inputVector);
+        String result = languageMap.getOrDefault(predicted, "Unknown");
+
+        System.out.println("Predicted language: " + result);
     }
 
     public static void evaluateModel(int[] trueLabels, int[] predictedLabels, int numClasses) {
